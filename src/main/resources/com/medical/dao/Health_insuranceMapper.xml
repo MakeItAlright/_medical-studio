@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.medical.dao.Health_insuranceMapper">
+    <!--auto generated Code-->
+    <resultMap id="BaseResultMap" type="com.medical.po.Health_insurance">
+        <result column="hi_id" property="hi_id" jdbcType="INTEGER"/>
+        <result column="student_no" property="student_no" jdbcType="VARCHAR"/>
+        <result column="name" property="name" jdbcType="VARCHAR"/>
+        <result column="dept" property="dept" jdbcType="VARCHAR"/>
+        <result column="grade" property="grade" jdbcType="VARCHAR"/>
+        <result column="major" property="major" jdbcType="VARCHAR"/>
+        <result column="glass" property="glass" jdbcType="VARCHAR"/>
+        <result column="card_no" property="card_no" jdbcType="VARCHAR"/>
+        <result column="id_no" property="id_no" jdbcType="VARCHAR"/>
+        <result column="mobile" property="mobile" jdbcType="VARCHAR"/>
+        <result column="start_date" property="start_date" jdbcType="VARCHAR"/>
+        <result column="end_date" property="end_date" jdbcType="VARCHAR"/>
+        <result column="hi_status" property="hi_status" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <!--auto generated Code-->
+    <sql id="Base_Column_List">
+        hi_id,
+        student_no,
+        name,
+        dept,
+        grade,
+        major,
+        glass,
+        card_no,
+        id_no,
+        mobile,
+        start_date,
+        end_date,
+        hi_status
+    </sql>
+
+    <!--添加医保信息-->
+    <insert id="insert" parameterType="Health_insurance">
+        INSERT INTO health_insurance (
+            student_no,
+            name,
+            dept,
+            grade,
+            major,
+            glass,
+            card_no,
+            id_no,
+            mobile,
+            start_date,
+            end_date,
+            hi_status
+        ) VALUES (
+            #{health_insurance.student_no,jdbcType=VARCHAR},
+            #{health_insurance.name,jdbcType=VARCHAR},
+            #{health_insurance.dept,jdbcType=VARCHAR},
+            #{health_insurance.grade,jdbcType=VARCHAR},
+            #{health_insurance.major,jdbcType=VARCHAR},
+            #{health_insurance.glass,jdbcType=VARCHAR},
+            #{health_insurance.card_no,jdbcType=VARCHAR},
+            #{health_insurance.id_no,jdbcType=VARCHAR},
+            #{health_insurance.mobile,jdbcType=VARCHAR},
+            #{health_insurance.start_date,jdbcType=VARCHAR},
+            #{health_insurance.end_date,jdbcType=VARCHAR},
+            #{health_insurance.hi_status,jdbcType=VARCHAR}
+        )
+    </insert>
+
+    <!--删除医保信息通过医保卡号-->
+    <delete id="deleteByCard_no" parameterType="String">
+        DELETE FROM health_insurance
+        WHERE card_no = #{health_insurance.card_no,jdbcType=VARCHAR}
+    </delete>
+
+    <!--修改医保信息通过医保卡号-->
+    <update id="updateByPrimaryKeySelective" parameterType="Health_insurance">
+        UPDATE health_insurance
+        <set>
+            <if test="health_insurance.student_no != null"> student_no= #{health_insurance.student_no,jdbcType=VARCHAR},</if>
+            <if test="health_insurance.name != null"> name= #{health_insurance.name,jdbcType=VARCHAR},</if>
+            <if test="health_insurance.dept != null"> dept= #{health_insurance.dept,jdbcType=VARCHAR},</if>
+            <if test="health_insurance.grade != null"> grade= #{health_insurance.grade,jdbcType=VARCHAR},</if>
+            <if test="health_insurance.major != null"> major= #{health_insurance.major,jdbcType=VARCHAR},</if>
+            <if test="health_insurance.glass != null"> glass= #{health_insurance.glass,jdbcType=VARCHAR},</if>
+            <if test="health_insurance.card_no != null"> card_no= #{health_insurance.card_no,jdbcType=VARCHAR},</if>
+            <if test="health_insurance.id_no != null"> id_no= #{health_insurance.id_no,jdbcType=VARCHAR},</if>
+            <if test="health_insurance.mobile != null"> mobile= #{health_insurance.mobile,jdbcType=VARCHAR},</if>
+            <if test="health_insurance.start_date != null"> start_date= #{health_insurance.start_date,jdbcType=VARCHAR},</if>
+            <if test="health_insurance.end_date != null"> end_date= #{health_insurance.end_date,jdbcType=VARCHAR},</if>
+            <if test="health_insurance.hi_status != null"> hi_status= #{health_insurance.hi_status,jdbcType=VARCHAR}</if>
+        </set>
+        WHERE card_no = #{health_insurance.card_no,jdbcType=VARCHAR}
+    </update>
+
+    <!--通过学号查找学生信息-->
+    <select id="findByStudentNo" parameterType="String" resultType="Health_insurance">
+        SELECT * FROM health_insurance
+        WHERE student_no LIKE concat("%",#{student_no},"%");
+    </select>
+
+</mapper>
+

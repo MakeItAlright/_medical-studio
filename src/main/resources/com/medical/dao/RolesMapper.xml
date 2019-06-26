@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.medical.dao.RolesMapper">
+    <!--auto generated Code-->
+    <resultMap id="BaseResultMap" type="com.medical.po.Roles">
+        <result column="role_no" property="role_no" jdbcType="INTEGER"/>
+        <result column="role_name" property="role_name" jdbcType="VARCHAR"/>
+        <result column="role_desc" property="role_desc" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <!--auto generated Code-->
+    <sql id="Base_Column_List">
+        role_no,
+        role_name,
+        role_desc
+    </sql>
+
+    <!--添加一个角色-->
+    <insert id="insertRole" parameterType="Roles">
+        INSERT INTO roles (
+            role_name,
+            role_desc
+        ) VALUES (
+            #{roles.role_name,jdbcType=VARCHAR},
+            #{roles.role_desc,jdbcType=VARCHAR}
+        )
+    </insert>
+
+    <!--删除角色通过角色名-->
+    <delete id="deleteRole" parameterType="String">
+        DELETE FROM roles
+        WHERE role_name = #{roleName}
+    </delete>
+
+    <!--更新角色名及(可选)描述信息-->
+    <update id="updateRole" parameterType="Roles">
+        UPDATE roles
+        <set>
+            <if test="roles.role_name != null"> role_name= #{roles.role_name,jdbcType=VARCHAR},</if>
+            <if test="roles.role_desc != null"> role_desc= #{roles.role_desc,jdbcType=VARCHAR}</if>
+        </set>
+        WHERE role_name = #{roles.role_name,jdbcType=INTEGER}
+    </update>
+
+    <!--查询角色所拥有的权限-->
+    <select id="findByRoleName" parameterType="String" resultType="com.medical.po.Roles">
+        SELECT * FROM roles
+        WHERE role_name LIKE concat("%",#{name},"%");
+    </select>
+
+</mapper>
+

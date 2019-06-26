@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd">
+
+    <!-- 注解驱动加载 -->
+    <mvc:annotation-driven/>
+    <!-- 配置包扫描 -->
+    <context:component-scan base-package="com.medical.controller"/>
+
+    <!-- 视图解析 -->
+    <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+        <property name="prefix" value="/WEB-INF/page/"/>
+        <property name="suffix" value=".jsp"/>
+    </bean>
+
+    <!--<mvc:interceptors>-->
+      <!--<mvc:interceptor>-->
+        <!--&lt;!&ndash;配置拦截器作用的访问路径，只有访问该路径拦截器才生效&ndash;&gt;-->
+        <!--<mvc:mapping path="/**"/>-->
+        <!--<bean class="com.medical.interceptor.LoginInterceptor"></bean>-->
+      <!--</mvc:interceptor>-->
+    <!--</mvc:interceptors>-->
+
+</beans>
