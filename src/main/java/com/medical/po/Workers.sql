@@ -1,0 +1,8 @@
+-- auto Generated on 2019-06-22
+-- DROP TABLE IF EXISTS workers;
+CREATE TABLE workers(
+	w_id INT (11) NOT NULL AUTO_INCREMENT COMMENT 'w_id',
+	username VARCHAR (50) UNIQUE NOT NULL DEFAULT '' COMMENT 'username',
+	password VARCHAR (50) NOT NULL DEFAULT '' COMMENT 'password',
+	PRIMARY KEY (w_id)
+)ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT 'workers';

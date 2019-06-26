@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.medical.dao.WorkersMapper">
+    <!--auto generated Code-->
+    <resultMap id="BaseResultMap" type="com.medical.po.Workers">
+        <result column="w_id" property="w_id" jdbcType="INTEGER"/>
+        <result column="username" property="username" jdbcType="VARCHAR"/>
+        <result column="password" property="password" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <!--auto generated Code-->
+    <sql id="Base_Column_List">
+        w_id,
+        username,
+        password
+    </sql>
+
+  <!--增加一个用户，id在数据库自增在这里不进行插入-->
+    <insert id="insert" parameterType="workers">
+        INSERT INTO workers (
+            username,
+            password
+        ) VALUES (
+            #{workers.username,jdbcType=VARCHAR},
+            #{workers.password,jdbcType=VARCHAR}
+        )
+    </insert>
+
+    <!--删除一个用户-->
+    <delete id="deleteWorkersByUsername" parameterType="String">
+          DELETE FROM workers
+          WHERE username = #{username,jdbcType=VARCHAR}
+      </delete>
+  
+    <!--更新员工信息-->
+    <update id="updateWorkersByUsername" parameterType="workers">
+      UPDATE workers
+      <set>
+        <if test="workers.w_id != null"> username= #{workers.w_id,jdbcType=INTEGER},</if>
+        <if test="workers.username != null"> username= #{workers.username,jdbcType=VARCHAR},</if>
+        <if test="workers.password != null"> password= #{workers.password,jdbcType=VARCHAR},</if>
+      </set>
+      WHERE username = #{workers.username},jdbcType=VARCHAR}
+    </update>
+  
+    <!--查询一个用户通过登录账号-->
+    <select id="findUserByUsername" parameterType="String" resultType="workers">
+          SELECT * FROM workers
+          WHERE username = #{username,jdbcType=VARCHAR}
+      </select>
+</mapper>
+
