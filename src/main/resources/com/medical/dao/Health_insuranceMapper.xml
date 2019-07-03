@@ -82,7 +82,6 @@
             <if test="health_insurance.grade != null"> grade= #{health_insurance.grade,jdbcType=VARCHAR},</if>
             <if test="health_insurance.major != null"> major= #{health_insurance.major,jdbcType=VARCHAR},</if>
             <if test="health_insurance.glass != null"> glass= #{health_insurance.glass,jdbcType=VARCHAR},</if>
-            <if test="health_insurance.card_no != null"> card_no= #{health_insurance.card_no,jdbcType=VARCHAR},</if>
             <if test="health_insurance.id_no != null"> id_no= #{health_insurance.id_no,jdbcType=VARCHAR},</if>
             <if test="health_insurance.mobile != null"> mobile= #{health_insurance.mobile,jdbcType=VARCHAR},</if>
             <if test="health_insurance.start_date != null"> start_date= #{health_insurance.start_date,jdbcType=VARCHAR},</if>
@@ -92,10 +91,10 @@
         WHERE card_no = #{health_insurance.card_no,jdbcType=VARCHAR}
     </update>
 
-    <!--通过学号查找学生信息-->
-    <select id="findByStudentNo" parameterType="String" resultType="Health_insurance">
+    <!--通过学号查找学生医保信息-->
+    <select id="findInsuranceByStudentUsername" parameterType="String" resultType="Health_insurance">
         SELECT * FROM health_insurance
-        WHERE student_no LIKE concat("%",#{student_no},"%");
+        WHERE username = #{username,jdbcType=VARCHAR}
     </select>
 
 </mapper>

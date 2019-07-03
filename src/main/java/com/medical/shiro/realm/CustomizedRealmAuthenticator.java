@@ -23,9 +23,12 @@ public class CustomizedRealmAuthenticator extends ModularRealmAuthenticator {//�
         Collection<Realm> allRealms = getRealms();
         //登录类型对应的realm
         Collection<Realm> typeRealms = new ArrayList<>();
-        for (Realm realm: allRealms)
-          if (realm.getName().contains(loginType))
+        for (Realm realm: allRealms) {
+          System.out.println("realm.getName().contains(loginType):"+realm.getName().contains(loginType));
+          if (realm.getName().contains(loginType)) {
             typeRealms.add(realm);
+          }
+        }
       // 当只有一个Realm时，就使用这个Realm，当配置了多个Realm时，会使用所有配置的Realm
       return typeRealms.size() == 1 ?
         this.doSingleRealmAuthentication(typeRealms.iterator().next(), token) : this.doMultiRealmAuthentication(typeRealms, token);

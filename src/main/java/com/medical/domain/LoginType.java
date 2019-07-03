@@ -8,7 +8,7 @@ public enum  LoginType {
     ADMIN("Admin"),
 
     //超级管理员
-    SUPER("Super");
+    WORKER("Worker");
 
     //登录类型
     private String type;
@@ -18,15 +18,8 @@ public enum  LoginType {
       this.type = type;
     }
 
-    // 枚举对象获取 登录类型 的方法
-    public String getType() {
-      return this.type;
-    }
-
     @Override
     public String toString() {
-      return "LoginType{" +
-        "type='" + type + '\'' +
-        '}';
+      return type;
     }
 }

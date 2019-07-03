@@ -1,12 +1,13 @@
-package com.medical.service;
+package com.medical.service.impl;
 
+import com.medical.service.UsersService;
 import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
 import com.medical.po.Users;
 import com.medical.dao.UsersMapper;
 
 @Service
-public class UsersServiceImpl implements UsersService{
+public class UsersServiceImpl implements UsersService {
 
     @Resource
     private UsersMapper usersMapper;
@@ -25,14 +26,6 @@ public class UsersServiceImpl implements UsersService{
 
     public Users findUserByUsername(String username) {
         return usersMapper.findUserByUsername(username);
-    }
-
-    public Users findStudentByUsername(String student) {
-      return usersMapper.findStudentByUsername(student);
-    }
-
-    public Users findAdminByUsername(String admin) {
-      return usersMapper.findAdminByUsername(admin);
     }
 
 }

@@ -1,5 +1,6 @@
-package com.medical.service;
+package com.medical.service.impl;
 
+import com.medical.service.RolesService;
 import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
 
@@ -7,7 +8,7 @@ import com.medical.po.Roles;
 import com.medical.dao.RolesMapper;
 
 @Service
-public class RolesServiceImpl implements RolesService{
+public class RolesServiceImpl implements RolesService {
 
     @Resource
     private RolesMapper rolesMapper;

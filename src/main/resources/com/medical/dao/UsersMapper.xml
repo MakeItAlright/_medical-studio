@@ -37,7 +37,6 @@
             username,
             password,
             name,
-            userrole,
             email,
             telephone,
             mobilephone,
@@ -48,7 +47,6 @@
             #{users.username,jdbcType=VARCHAR},
             #{users.password,jdbcType=VARCHAR},
             #{users.name,jdbcType=VARCHAR},
-            #{users.userrole,jdbcType=VARCHAR},
             #{users.email,jdbcType=VARCHAR},
             #{users.telephone,jdbcType=VARCHAR},
             #{users.mobilephone,jdbcType=VARCHAR},
@@ -64,20 +62,15 @@
         WHERE username = #{username,jdbcType=VARCHAR}
     </delete>
 
-    <!--更新用户信息-->
+    <!--更新(学生)用户信息-->
     <update id="updateUsersByUsername" parameterType="Users">
         UPDATE users
         <set>
-            <if test="users.id != null"> username= #{users.id,jdbcType=INTEGER},</if>
-            <if test="users.username != null"> username= #{users.username,jdbcType=VARCHAR},</if>
             <if test="users.password != null"> password= #{users.password,jdbcType=VARCHAR},</if>
             <if test="users.name != null"> name= #{users.name,jdbcType=VARCHAR},</if>
-            <if test="users.userrole != null"> userrole= #{users.userrole,jdbcType=VARCHAR},</if>
             <if test="users.email != null"> email= #{users.email,jdbcType=VARCHAR},</if>
             <if test="users.telephone != null"> telephone= #{users.telephone,jdbcType=VARCHAR},</if>
             <if test="users.mobilephone != null"> mobilephone= #{users.mobilephone,jdbcType=VARCHAR},</if>
-            <if test="users.work_no != null"> work_no= #{users.work_no,jdbcType=VARCHAR},</if>
-            <if test="users.u_status != null"> u_status= #{users.u_status,jdbcType=VARCHAR},</if>
             <if test="users.remark != null"> remark= #{users.remark,jdbcType=VARCHAR}</if>
         </set>
         WHERE username = #{users.username,jdbcType=VARCHAR}

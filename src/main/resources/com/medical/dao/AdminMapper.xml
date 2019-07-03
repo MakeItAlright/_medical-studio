@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.medical.dao.AdminMapper">
+  <!--auto generated Code-->
+  <resultMap id="BaseResultMap" type="com.medical.po.Users">
+    <result column="id" property="id" jdbcType="INTEGER"/>
+    <result column="username" property="username" jdbcType="VARCHAR"/>
+    <result column="password" property="password" jdbcType="VARCHAR"/>
+    <result column="name" property="name" jdbcType="VARCHAR"/>
+    <result column="userrole" property="userrole" jdbcType="VARCHAR"/>
+    <result column="email" property="email" jdbcType="VARCHAR"/>
+    <result column="telephone" property="telephone" jdbcType="VARCHAR"/>
+    <result column="mobilephone" property="mobilephone" jdbcType="VARCHAR"/>
+    <result column="work_no" property="work_no" jdbcType="VARCHAR"/>
+  </resultMap>
+
+  <insert id="insertWorker" parameterType="workers">
+      INSERT INTO workers (
+          `username`,
+          `password`,
+          `position`,
+          `work_no`,
+          `name`,
+          `mobilephone`,
+          `userrole`
+      ) VALUES (
+          #{workers.username,jdbcType=VARCHAR},
+          #{workers.password,jdbcType=VARCHAR},
+          #{workers.position,jdbcType=VARCHAR},
+          #{workers.work_no,jdbcType=VARCHAR},
+          #{workers.name,jdbcType=VARCHAR},
+          #{workers.mobilephone,jdbcType=VARCHAR},
+          "员工"
+      )
+  </insert>
+
+  <!--查询 admin 通过登录账号-->
+  <select id="findAdminByUsername" parameterType="String" resultType="Users">
+          SELECT * FROM users
+          WHERE username = #{username,jdbcType=VARCHAR}
+          AND userrole = '管理员'
+    </select>
+
+  <!--删除一个用户-->
+  <delete id="deleteWorkersByUsername" parameterType="String">
+          DELETE FROM workers
+          WHERE username = #{username,jdbcType=VARCHAR}
+  </delete>
+
+    <!--更新角色是员工的信息-->
+  <update id="updateWorkersByUsername" parameterType="workers">
+    UPDATE workers
+    <set>
+      <if test="workers.password != null"> password= #{workers.password,jdbcType=VARCHAR},</if>
+      <if test="workers.position != null"> position= #{workers.position,jdbcType=VARCHAR},</if>
+      <if test="workers.work_no != null"> work_no= #{workers.work_no,jdbcType=VARCHAR},</if>
+      <if test="workers.name != null"> name= #{workers.name,jdbcType=VARCHAR},</if>
+      <if test="workers.mobilephone != null"> mobilephone= #{workers.mobilephone,jdbcType=VARCHAR}</if>
+    </set>
+    WHERE username = #{workers.username,jdbcType=VARCHAR}
+  </update>
+
+  <!--管理员信息修改-->
+  <update id="alterAdminInfo" parameterType="users">
+    UPDATE users
+    <set>
+      <if test="users.password != null"> password= #{users.password,jdbcType=VARCHAR},</if>
+      <if test="users.name != null"> name= #{users.name,jdbcType=VARCHAR},</if>
+      <if test="users.email != null"> email= #{users.email,jdbcType=VARCHAR},</if>
+      <if test="users.telephone != null"> telephone= #{users.telephone,jdbcType=VARCHAR},</if>
+      <if test="users.mobilephone != null"> mobilephone= #{users.mobilephone,jdbcType=VARCHAR}</if>
+    </set>
+    WHERE username = #{users.username,jdbcType=VARCHAR} AND userrole = "管理员"
+  </update>
+
+  <select id="listWorkers" resultMap="BaseResultMap">
+    SELECT * FROM users
+    INNER JOIN workers
+    ON users.username = workers.username
+  </select>
+
+</mapper>

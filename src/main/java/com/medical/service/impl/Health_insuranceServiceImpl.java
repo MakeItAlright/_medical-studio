@@ -1,5 +1,6 @@
-package com.medical.service;
+package com.medical.service.impl;
 
+import com.medical.service.Health_insuranceService;
 import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
 import com.medical.po.Health_insurance;
@@ -7,7 +8,7 @@ import com.medical.dao.Health_insuranceMapper;
 
 @Service
 //@Transactional 对该标识类中的所有方法进行事务管理
-public class Health_insuranceServiceImpl implements Health_insuranceService{
+public class Health_insuranceServiceImpl implements Health_insuranceService {
 
     @Resource
     private Health_insuranceMapper health_insuranceMapper;
@@ -24,7 +25,7 @@ public class Health_insuranceServiceImpl implements Health_insuranceService{
         return health_insuranceMapper.updateByPrimaryKeySelective(health_insurance);
     }
 
-    public Health_insurance findByStudentNo(String name) {
-        return health_insuranceMapper.findByStudentNo(name);
+    public Health_insurance findInsuranceByStudentUsername(String username) {
+        return health_insuranceMapper.findInsuranceByStudentUsername(username);
     }
 }

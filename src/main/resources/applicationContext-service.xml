@@ -23,6 +23,12 @@
       </list>
     </property>
   </bean>
+  <!-- 实现多Realm认证 -->
+  <bean id="authenticator" class="com.medical.shiro.realm.CustomizedRealmAuthenticator">
+    <property name="authenticationStrategy">
+      <bean class="org.apache.shiro.authc.pam.AtLeastOneSuccessfulStrategy"/>
+    </property>
+  </bean>
 
   <!-- 配置CacheManager -->
   <bean id="cacheManager" class="org.apache.shiro.cache.ehcache.EhCacheManager">
@@ -32,48 +38,62 @@
   <!-- 配置realm -->
   <!-- Define the realm you want to use to connect to your back-end security datasource: -->
   <bean id="userRealm" class="com.medical.shiro.realm.UserRealm">
-    <!-- 配置密码匹配器 -->
-    <property name="credentialsMatcher">
-      <bean class="org.apache.shiro.authc.credential.HashedCredentialsMatcher">
-        <!-- 加密算法为MD5 -->
-        <property name="hashAlgorithmName" value="MD5"></property>
-        <!-- 加密次数 -->
-        <property name="hashIterations" value="1024"></property>
-      </bean>
-    </property>
+    <!--配置密码匹配器 -->
+    <!--<property name="credentialsMatcher">-->
+      <!--<bean class="org.apache.shiro.authc.credential.HashedCredentialsMatcher">-->
+        <!--&lt;!&ndash; 加密算法为MD5 &ndash;&gt;-->
+        <!--<property name="hashAlgorithmName" value="MD5"></property>-->
+        <!--&lt;!&ndash; 加密次数 &ndash;&gt;-->
+        <!--<property name="hashIterations" value="1024"></property>-->
+      <!--</bean>-->
+    <!--</property>-->
   </bean>
   <bean id="workerRealm" class="com.medical.shiro.realm.WorkerRealm">
     <!-- 配置密码匹配器 -->
-    <property name="credentialsMatcher">
-      <bean class="org.apache.shiro.authc.credential.HashedCredentialsMatcher">
-        <!-- 加密算法为MD5 -->
-        <property name="hashAlgorithmName" value="MD5"></property>
-        <!-- 加密次数 -->
-        <property name="hashIterations" value="1024"></property>
-      </bean>
-    </property>
+    <!--<property name="credentialsMatcher">-->
+      <!--<bean class="org.apache.shiro.authc.credential.HashedCredentialsMatcher">-->
+        <!--&lt;!&ndash; 加密算法为MD5 &ndash;&gt;-->
+        <!--<property name="hashAlgorithmName" value="MD5"></property>-->
+        <!--&lt;!&ndash; 加密次数 &ndash;&gt;-->
+        <!--<property name="hashIterations" value="1024"></property>-->
+      <!--</bean>-->
+    <!--</property>-->
   </bean>
   <bean id="adminRealm" class="com.medical.shiro.realm.AdminRealm">
-  <!-- 配置密码匹配器 -->
-  <property name="credentialsMatcher">
-    <bean class="org.apache.shiro.authc.credential.HashedCredentialsMatcher">
-      <!-- 加密算法为MD5 -->
-      <property name="hashAlgorithmName" value="MD5"></property>
-      <!-- 加密次数 -->
-      <property name="hashIterations" value="1024"></property>
-    </bean>
-  </property>
+    <!-- 配置密码匹配器 -->
+    <!--<property name="credentialsMatcher">-->
+      <!--<bean class="org.apache.shiro.authc.credential.HashedCredentialsMatcher">-->
+        <!--&lt;!&ndash; 加密算法为MD5 &ndash;&gt;-->
+        <!--<property name="hashAlgorithmName" value="MD5"></property>-->
+        <!--&lt;!&ndash; 加密次数 &ndash;&gt;-->
+        <!--<property name="hashIterations" value="1024"></property>-->
+      <!--</bean>-->
+    <!--</property>-->
   </bean>
 
   <bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
     <property name="securityManager" ref="securityManager"/>
+    <!--<property name="filterChainDefinitions">-->
+      <!--<value>-->
+        <!--# some example chain definitions:-->
+        <!--/logout = logout-->
+        <!--/ = anon-->
+        <!--/** = authc-->
+        <!--# more URL-to-FilterChain definitions here-->
+      <!--</value>-->
+    <!--</property>-->
   </bean>
 
-  <!-- 实现多Realm认证 -->
-  <bean id="authenticator" class="com.medical.shiro.realm.CustomizedRealmAuthenticator">
-    <property name="authenticationStrategy">
-      <bean class="org.apache.shiro.authc.pam.AtLeastOneSuccessfulStrategy"/>
-    </property>
-  </bean>
+  <!--&lt;!&ndash; 自定义调用配置在Spring IOC容器中shiro bean的生命周期方法 &ndash;&gt;-->
+  <!--<bean id="lifecycleBeanPostProcessor" class="org.apache.shiro.spring.LifecycleBeanPostProcessor" />-->
+
+  <!--&lt;!&ndash; 在IOC容器中使用shiro的注解，但必须在配置了LifecycleBeanPostProcessor之后才可以使用 &ndash;&gt;-->
+  <!--<bean-->
+  <!--class="org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator"-->
+  <!--depends-on="lifecycleBeanPostProcessor" />-->
+  <!--<bean-->
+  <!--class="org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor">-->
+  <!--<property name="securityManager" ref="securityManager" />-->
+  <!--</bean>-->
 
 </beans>

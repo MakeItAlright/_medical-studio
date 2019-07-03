@@ -2,10 +2,15 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.medical.dao.WorkersMapper">
     <!--auto generated Code-->
-    <resultMap id="BaseResultMap" type="com.medical.po.Workers">
-        <result column="w_id" property="w_id" jdbcType="INTEGER"/>
+    <resultMap id="BaseResultMap" type="com.medical.po.Users">
+        <result column="w_id" property="id" jdbcType="INTEGER"/>
         <result column="username" property="username" jdbcType="VARCHAR"/>
-        <result column="password" property="password" jdbcType="VARCHAR"/>
+        <result column="name" property="name" jdbcType="VARCHAR"/>
+        <result column="userrole" property="userrole" jdbcType="VARCHAR"/>
+        <result column="email" property="email" jdbcType="VARCHAR"/>
+        <result column="telephone" property="telephone" jdbcType="VARCHAR"/>
+        <result column="mobilephone" property="mobilephone" jdbcType="VARCHAR"/>
+        <result column="u_status" property="u_status" jdbcType="VARCHAR"/>
     </resultMap>
 
     <!--auto generated Code-->
@@ -15,38 +20,26 @@
         password
     </sql>
 
-  <!--增加一个用户，id在数据库自增在这里不进行插入-->
-    <insert id="insert" parameterType="workers">
-        INSERT INTO workers (
-            username,
-            password
-        ) VALUES (
-            #{workers.username,jdbcType=VARCHAR},
-            #{workers.password,jdbcType=VARCHAR}
-        )
-    </insert>
-
-    <!--删除一个用户-->
-    <delete id="deleteWorkersByUsername" parameterType="String">
-          DELETE FROM workers
-          WHERE username = #{username,jdbcType=VARCHAR}
-      </delete>
-  
     <!--更新员工信息-->
     <update id="updateWorkersByUsername" parameterType="workers">
       UPDATE workers
       <set>
-        <if test="workers.w_id != null"> username= #{workers.w_id,jdbcType=INTEGER},</if>
-        <if test="workers.username != null"> username= #{workers.username,jdbcType=VARCHAR},</if>
         <if test="workers.password != null"> password= #{workers.password,jdbcType=VARCHAR},</if>
+        <if test="workers.name != null"> name= #{workers.name,jdbcType=VARCHAR},</if>
+        <if test="workers.mobilephone != null"> mobilephone= #{workers.mobilephone,jdbcType=VARCHAR}</if>
       </set>
-      WHERE username = #{workers.username},jdbcType=VARCHAR}
+      WHERE username = #{workers.username,jdbcType=VARCHAR}
     </update>
-  
-    <!--查询一个用户通过登录账号-->
-    <select id="findUserByUsername" parameterType="String" resultType="workers">
+
+  <!--查询一个用户通过登录账号-->
+    <select id="findWorkerByUsername" parameterType="String" resultType="workers">
           SELECT * FROM workers
           WHERE username = #{username,jdbcType=VARCHAR}
-      </select>
+    </select>
+
+  <!--列表所有学生-->
+    <select id="listCustomer" resultMap="BaseResultMap">
+        SELECT * FROM users WHERE userrole = '学生'
+    </select>
 </mapper>
 
