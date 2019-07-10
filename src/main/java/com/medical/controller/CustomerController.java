@@ -10,7 +10,9 @@ import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.IncorrectCredentialsException;
 import org.apache.shiro.authc.LockedAccountException;
+import org.apache.shiro.crypto.hash.SimpleHash;
 import org.apache.shiro.subject.Subject;
+import org.apache.shiro.util.ByteSource;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -49,6 +51,14 @@ public class CustomerController {
         System.out.println("---------debug:username="+username+",password="+password);
         Subject currentUser = SecurityUtils.getSubject();
         if (!currentUser.isAuthenticated()) {
+
+//          String algorithmName = "MD5";
+//          Object source = password;
+//          Object salt = ByteSource.Util.bytes(source);
+//          int hashIterations = 1024;
+//          Object result = new SimpleHash(algorithmName, source, salt, hashIterations);
+//          System.out.println("result"+result);
+
           CustomizedToken token = new CustomizedToken(username, password, USER_LOGIN_TYPE);
           token.setRememberMe(false);
           try {
@@ -63,6 +73,12 @@ public class CustomerController {
           }
         }
         return "login";
+    }
+
+    @RequestMapping(value = "/logout")
+    public String doLogout() {
+      SecurityUtils.getSubject().logout();
+      return "login";
     }
 
     //查询医保信息

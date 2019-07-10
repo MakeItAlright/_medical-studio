@@ -29,14 +29,15 @@ public class UserRealm extends AuthorizingRealm {
       user = usersService.findUserByUsername(username);
       if (user == null)
         throw new UnknownAccountException("用户不存在！");
+
       //构建AuthenticationInfo对象并返回，通常使用的实现类为SimpleAuthenticationInfo
       Object principal = username;  //账号
       Object credentials = user.getPassword();  //密码
-      System.out.println("debug-----账号："+username+",密码:"+credentials);
       String realmName = getName();   //获取当前 realm的名字
+      System.out.println("debug-----账号："+username+",密码:"+credentials);
       System.out.println("getName():"+getName());
       //取用户信息中唯一的字段来生加密后的密码
-      ByteSource credentialsSalt = ByteSource.Util.bytes(username);
+      ByteSource credentialsSalt = ByteSource.Util.bytes(principal);
       SimpleAuthenticationInfo info = new SimpleAuthenticationInfo(principal, credentials, credentialsSalt,
         realmName);
       System.out.println(info);

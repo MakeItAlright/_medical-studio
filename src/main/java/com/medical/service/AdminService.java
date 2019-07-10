@@ -15,7 +15,7 @@ public interface AdminService {
 
   int alterAdminInfo(Users users);    //管理员信息修改
 
-  Users findAdminByUsername(String admin);   //查找admin用户通过账号
+  Users findAdminByUsername(String username);   //查找admin用户通过账号
 
   List<Workers> listWorkers();  //列出所有员工
 }

@@ -1,6 +1,6 @@
 package com.medical.domain;
 
-public enum  LoginType {
+public enum  LoginType {  //枚举
     //普通用户
     USER("User"),
 

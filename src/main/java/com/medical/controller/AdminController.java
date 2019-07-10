@@ -9,10 +9,13 @@ import com.medical.shiro.token.CustomizedToken;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.IncorrectCredentialsException;
+import org.apache.shiro.crypto.hash.SimpleHash;
 import org.apache.shiro.subject.Subject;
+import org.apache.shiro.util.ByteSource;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 @RestController
@@ -26,13 +29,21 @@ public class AdminController {
 
     private static final String ADMIN_LOGIN_TYPE = LoginType.ADMIN.toString();
 
-    //管理员登录   有问题
+    //管理员登录
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     public String adminLogin(@RequestParam("username") String username,
                              @RequestParam("password") String password){
 
       Subject admin = SecurityUtils.getSubject();
       if (!admin.isAuthenticated()) {
+
+//        String algorithmName = "MD5";   //加密算法
+//        Object source = password;  //密码
+//        ByteSource salt = ByteSource.Util.bytes(username);    //取唯一字段(账号)生成盐值
+//        int hashIterations = 10204;   //加密次数
+//        Object result = new SimpleHash(algorithmName,source,salt,hashIterations);
+//        System.out.println("result:"+result);
+
         CustomizedToken token = new CustomizedToken(username,password,ADMIN_LOGIN_TYPE);
         token.setRememberMe(false);
         try {
@@ -45,6 +56,12 @@ public class AdminController {
         }
       }
         return "adminLogin";
+    }
+
+    @RequestMapping(value = "/logout")
+    public String doLogout() {
+      SecurityUtils.getSubject().logout();
+      return "adminLogin";
     }
 
     //创建一个员工用户

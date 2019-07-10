@@ -27,16 +27,6 @@
         <url-pattern>/</url-pattern>
     </filter-mapping>
 
-    <!--配置允许跨域访问-->
-    <filter>
-      <filter-name>CorsFilter</filter-name>
-      <filter-class>org.apache.catalina.filters.CorsFilter</filter-class>
-    </filter>
-    <filter-mapping>
-      <filter-name>CorsFilter</filter-name>
-      <url-pattern>/*</url-pattern>
-    </filter-mapping>
-
     <!-- The filter-name matches name of a 'shiroFilter' bean inside applicationContext.xml -->
     <filter>
       <filter-name>shiroFilter</filter-name>
@@ -60,7 +50,7 @@
             <param-name>contextConfigLocation</param-name>
             <param-value>classpath:dispatcher-servlet.xml</param-value>
         </init-param>
-        <load-on-startup>1</load-on-startup>
+      <load-on-startup>1</load-on-startup>
     </servlet>
 
     <servlet-mapping>

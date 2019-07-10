@@ -14,6 +14,7 @@
   <bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
     <property name="cacheManager" ref="cacheManager" />
     <property name="authenticator" ref="authenticator" />
+    <!--<property name="sessionManager" ref="sessionManager"/>-->
     <!-- Single realm app.  If you have multiple realms, use the 'realms' property instead. -->
     <property name="realms">
       <list>
@@ -23,6 +24,12 @@
       </list>
     </property>
   </bean>
+
+  <!-- 配置CacheManager -->
+  <bean id="cacheManager" class="org.apache.shiro.cache.ehcache.EhCacheManager">
+    <property name="cacheManagerConfigFile" value="classpath:ehcache.xml" />
+  </bean>
+
   <!-- 实现多Realm认证 -->
   <bean id="authenticator" class="com.medical.shiro.realm.CustomizedRealmAuthenticator">
     <property name="authenticationStrategy">
@@ -30,10 +37,26 @@
     </property>
   </bean>
 
-  <!-- 配置CacheManager -->
-  <bean id="cacheManager" class="org.apache.shiro.cache.ehcache.EhCacheManager">
-    <property name="cacheManagerConfigFile" value="classpath:ehcache.xml" />
-  </bean>
+  <!--自定义会话管理配置-->
+  <!--<bean id="sessionManager" class="com.medical.shiro.session.UserSessionManager">-->
+      <!--<property name="sessionDAO" ref="sessionDAO"/>-->
+
+      <!--&lt;!&ndash; 会话超时时间，单位：毫秒  &ndash;&gt;-->
+      <!--<property name="globalSessionTimeout" value="${session.sessionTimeout}"/>-->
+
+      <!--&lt;!&ndash; 定时清理失效会话, 清理用户直接关闭浏览器造成的孤立会话   &ndash;&gt;-->
+      <!--<property name="sessionValidationInterval" value="${session.sessionTimeoutClean}"/>-->
+      <!--&lt;!&ndash;          <property name="sessionValidationSchedulerEnabled" value="false"/> &ndash;&gt;-->
+      <!--<property name="sessionValidationSchedulerEnabled" value="true"/>-->
+      <!--<property name="sessionIdCookie" ref="sessionIdCookie"/>-->
+      <!--<property name="sessionIdCookieEnabled" value="true"/>-->
+  <!--</bean>-->
+
+  <!-- 指定 SESSIONID,默认为: JSESSIONID 问题: 与SERVLET容器名冲突, 如JETTY, TOMCAT 等默认JSESSIONID,
+        当跳出SHIRO SERVLET时如ERROR-PAGE容器会为JSESSIONID重新分配值导致登录会话丢失! -->
+  <!--<bean id="sessionIdCookie" class="org.apache.shiro.web.servlet.SimpleCookie">-->
+    <!--<constructor-arg name="name" value="shiro.session.id"/>-->
+  <!--</bean>-->
 
   <!-- 配置realm -->
   <!-- Define the realm you want to use to connect to your back-end security datasource: -->
@@ -75,17 +98,17 @@
     <property name="securityManager" ref="securityManager"/>
     <!--<property name="filterChainDefinitions">-->
       <!--<value>-->
-        <!--# some example chain definitions:-->
-        <!--/logout = logout-->
+        <!--&lt;!&ndash;# some example chain definitions:&ndash;&gt;-->
+        <!--&lt;!&ndash;&lt;!&ndash;/logout = logout&ndash;&gt;m&ndash;&gt;-->
         <!--/ = anon-->
         <!--/** = authc-->
-        <!--# more URL-to-FilterChain definitions here-->
+        <!--&lt;!&ndash;# more URL-to-FilterChain definitions here&ndash;&gt;-->
       <!--</value>-->
     <!--</property>-->
   </bean>
 
-  <!--&lt;!&ndash; 自定义调用配置在Spring IOC容器中shiro bean的生命周期方法 &ndash;&gt;-->
-  <!--<bean id="lifecycleBeanPostProcessor" class="org.apache.shiro.spring.LifecycleBeanPostProcessor" />-->
+  <!-- 自定义调用配置在Spring IOC容器中shiro bean的生命周期方法 -->
+  <bean id="lifecycleBeanPostProcessor" class="org.apache.shiro.spring.LifecycleBeanPostProcessor" />
 
   <!--&lt;!&ndash; 在IOC容器中使用shiro的注解，但必须在配置了LifecycleBeanPostProcessor之后才可以使用 &ndash;&gt;-->
   <!--<bean-->

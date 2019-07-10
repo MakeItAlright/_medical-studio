@@ -24,4 +24,16 @@
       <!--</mvc:interceptor>-->
     <!--</mvc:interceptors>-->
 
+    <mvc:cors>
+
+      <mvc:mapping path="/**"
+                   allowed-origins="*"
+                   allowed-methods="GET, POST"
+                   allow-credentials="true"
+                   max-age="3600" />
+
+      <mvc:mapping path="/resources/**"
+                   allowed-origins="*" />
+    </mvc:cors>
+
 </beans>

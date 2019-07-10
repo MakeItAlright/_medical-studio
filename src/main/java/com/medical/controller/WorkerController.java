@@ -27,7 +27,7 @@ public class WorkerController {
 
   private static final String WORKER_LOGIN_TYPE = LoginType.WORKER.toString();
 
-  //登录  有问题
+  //登录
   @RequestMapping(value = "/login")
   public String workerLogin(@RequestParam("username") String username,
                             @RequestParam("password") String password){
@@ -44,6 +44,12 @@ public class WorkerController {
         System.out.println(ae.getMessage());
       }
     }
+    return "login";
+  }
+
+  @RequestMapping(value = "/logout")
+  public String doLogout() {
+    SecurityUtils.getSubject().logout();
     return "login";
   }
 

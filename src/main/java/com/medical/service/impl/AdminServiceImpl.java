@@ -36,8 +36,8 @@ public class AdminServiceImpl implements AdminService {
   }
 
   @Override
-  public Users findAdminByUsername(String admin) {
-    return adminMapper.findAdminByUsername(admin);
+  public Users findAdminByUsername(String username) {
+    return adminMapper.findAdminByUsername(username);
   }
 
   @Override

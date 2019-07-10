@@ -1,4 +1,4 @@
-package com.medical;
+package com.medical.shiro.session;
 
 import org.apache.shiro.session.mgt.SessionManager;
 import org.apache.shiro.web.servlet.ShiroHttpServletRequest;

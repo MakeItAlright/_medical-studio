@@ -18,7 +18,7 @@ public interface AdminMapper {
 
   int alterAdminInfo(@Param("users") Users users);
 
-  Users findAdminByUsername(@Param("admin") String admin);
+  Users findAdminByUsername(@Param("username") String username);
 
   List<Workers> listWorkers();
 }
